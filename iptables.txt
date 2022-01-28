@@ -1,0 +1,3 @@
+#for saving iptables rules
+
+sudo /sbin/iptables-save > /home/anilprajapati/sgn-iptables
