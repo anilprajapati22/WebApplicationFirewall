@@ -4,6 +4,7 @@ echo -e "4 for Block All SHH connection"
 echo -e "5 for saving All Rules"
 echo -e "6 for Reset All Rules"
 echo -e "7 for Add Customer ip"
+echo -e "8 for Remove Customer ip"
 read choice
 
 if [[ "$USER" != "root" ]]
@@ -53,7 +54,7 @@ else
         iptables --table nat --append PREROUTING --protocol tcp --destination $firewallIp --dport 80 --jump DNAT --to-destination $clientIp
         iptables --table nat --append POSTROUTING --protocol tcp --destination $clientIp --dport 80 --jump SNAT --to-source $firewallIp
 
-    elif [[ 7 == $choice ]]
+    elif [[ 8 == $choice ]]
     then 
         echo -e "Remove Client Ip : "
         echo -e "enter Client Ip Address : "
