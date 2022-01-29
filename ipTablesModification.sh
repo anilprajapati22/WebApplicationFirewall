@@ -1,8 +1,9 @@
 echo -e "Enter 1 For Adding in Black List\n2 for Removing from Black List : \n"
-echo -e "3 for Adding in WhiteList for SSH\n"
-echo -e "4 for Block All SHH connection \n"
-echo -e "5 for saving All Rules\n"
-echo -e "6 for Reset All Rules\n"
+echo -e "3 for Adding in WhiteList for SSH"
+echo -e "4 for Block All SHH connection"
+echo -e "5 for saving All Rules"
+echo -e "6 for Reset All Rules"
+echo -e "7 for Add Customer ip"
 read choice
 
 if [[ "$USER" != "root" ]]
@@ -43,5 +44,24 @@ else
     then 
         echo -e "Reset All Rules\n"
         iptables -F
+    elif [[ 7 == $choice ]]
+    then 
+        echo -e "Adding Client Ip : "
+        echo -e "enter Client Ip Address : "
+        firewallIp=192.168.1.66
+        read clientIp
+        iptables --table nat --append PREROUTING --protocol tcp --destination $firewallIp --dport 80 --jump DNAT --to-destination $clientIp
+        iptables --table nat --append POSTROUTING --protocol tcp --destination $clientIp --dport 80 --jump SNAT --to-source $firewallIp
+
+    elif [[ 7 == $choice ]]
+    then 
+        echo -e "Remove Client Ip : "
+        echo -e "enter Client Ip Address : "
+        firewallIp=192.168.1.66
+        read clientIp
+        iptables --table nat -D PREROUTING --protocol tcp --destination $firewallIp --dport 80 --jump DNAT --to-destination $clientIp
+        iptables --table nat -D POSTROUTING --protocol tcp --destination $clientIp --dport 80 --jump SNAT --to-source $firewallIp
+
+
     fi
 fi

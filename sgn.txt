@@ -4,6 +4,33 @@ https://www.youtube.com/watch?v=NAdJojxENEU
 
 https://www.youtube.com/watch?v=D7LgjSOWCxg
 
+
+#adding rules
+
+iptables --table nat --append PREROUTING --protocol tcp --destination 192.168.1.66 --dport 80 --jump DNAT --to-destination 192.168.1.67
+
+iptables --table nat --append POSTROUTING --protocol tcp --destination 192.168.1.67 --dport 80 --jump SNAT --to-source 192.168.1.66
+
+
+#deleteing rules
+
+iptables --table nat -D PREROUTING --protocol tcp --destination 192.168.1.66 --dport 80 --jump DNAT --to-destination 192.168.1.67
+
+iptables --table nat -D POSTROUTING --protocol tcp --destination 192.168.1.67 --dport 80 --jump SNAT --to-source 192.168.1.66
+
+
+https://assets.nagios.com/downloads/nagios-log-server/docs/Configuring-Nagios-Log-Server-Inputs.pdf
+
+
+
+
+
+
+
+
+
+
+
 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
 
 
